@@ -4,7 +4,6 @@ class Solution {
         Set<Integer> set = new HashSet<Integer>();
         ListNode cur= head;
         ListNode prev= null;
-        ListNode nullNode= head;
         
         //1,2,3,3,4,4,4,5,3,3
         //[1,1,2,3,3]
@@ -24,7 +23,7 @@ class Solution {
             }
             cur = cur.next;
         }
-        //added to consider last reated numbers.
+        //added to consider last repeated numbers.
         if(prev!=null){
             prev.next=null;
         }
