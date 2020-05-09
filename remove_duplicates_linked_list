@@ -1,0 +1,33 @@
+class Solution {
+    public ListNode deleteDuplicates(ListNode head) {
+        
+        Set<Integer> set = new HashSet<Integer>();
+        ListNode cur= head;
+        ListNode prev= null;
+        ListNode nullNode= head;
+        
+        //1,2,3,3,4,4,4,5,3,3
+        //[1,1,2,3,3]
+        //int count=0;
+        while(cur!=null){
+            //nullNode = curr;
+            if(!set.contains(cur.val)){
+                set.add(cur.val);
+                //prev.next = cur;
+                //prev=cur;
+                if(prev==null){
+                    prev=cur;
+                }else{
+                    prev.next = cur;
+                    prev=cur;
+                }
+            }
+            cur = cur.next;
+        }
+        //added to consider last reated numbers.
+        if(prev!=null){
+            prev.next=null;
+        }
+        return head;
+    }
+}
