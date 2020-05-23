@@ -1,0 +1,67 @@
+class CircularQueue
+{
+    int headIndex = -1, tailIndex = -1;
+    int MAX_SIZE = 10;
+    int size = 0;
+    Node[] circularQueue = new Node[MAX_SIZE];
+
+    public void enqueue(final int data)
+    {
+        if (isFull())
+        {
+            //throw exception
+        }
+        final Node node = new Node(data);
+        tailIndex = (tailIndex +1) % circularQueue.length;
+        circularQueue[tailIndex] = node;
+        if (headIndex == -1)
+        {
+            headIndex = tailIndex;
+        }
+    }
+
+    public Node dqueue()
+    {
+        if (isEmpty())
+        {
+            //throw exception
+        }
+        final Node data = circularQueue[headIndex];
+        if (headIndex == tailIndex)
+        {
+            headIndex = -1;
+        }
+        else
+        {
+            headIndex = (headIndex + 1) % circularQueue.length;
+        }
+
+        return data;
+    }
+
+    public boolean isFull()
+    {
+        if ((tailIndex + 1) % circularQueue.length == headIndex)
+        {
+            //throw exception
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isEmpty()
+    {
+        if (headIndex == -1)
+        {
+            //throw exception
+            return true;
+        }
+        return false;
+    }
+}
+
+public class QueueExe
+{
+    public static void main(final String[] args)
+    {    }
+}
