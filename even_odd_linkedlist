@@ -1,0 +1,55 @@
+void seg()
+    {
+        Node curr = head;
+        Node ptr2 = head;
+        Node prev = null;
+        Node start = null;
+
+        while (ptr2.next != null)
+        {
+            ptr2 = ptr2.next;
+        }
+        final Node firstEnd = ptr2;
+        System.out.println(">>>" + firstEnd.data);
+        Node temp;
+        // 15: 20: 35: 40: 7: 11: 38: 41: 70
+        while (curr != null && curr != firstEnd)
+        {
+            if ((Integer) curr.data % 2 == 0)
+            {
+                if (prev == null)
+                {
+                    prev = curr;
+                    start = prev;
+                    //prev.next = null;
+                }
+                else
+                {
+                    prev.next = curr;
+                    prev = curr;
+                    //prev.next = null;
+                }
+                curr = curr.next;
+            }
+            else if ((Integer) curr.data % 2 != 0)
+            {
+                /*if (prev != null)
+                {
+                    prev.next = curr.next;
+                    prev = curr.next;
+                }*/
+                temp = curr.next;
+                ptr2.next = curr;
+                ptr2 = curr;
+                ptr2.next = null;
+                curr = temp;
+                //continue;
+            }
+        }
+        prev.next = firstEnd;
+        while (start != null)
+        {
+            System.out.print("->" + start.data);
+            start = start.next;
+        }
+    }
