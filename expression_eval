@@ -1,0 +1,122 @@
+public class SpecifierTest1 extends SpecifierTest
+{
+	static String out="";
+	public static void main(String[] args)
+    {
+        //Convert infix to postfix
+		//Evaluate postfix
+		//String infix = "(5+4)*8+(5+3)";
+		String infix = "2+3*4";
+		//String infix = "A*(B+C)-D/(E+F)";
+		//ABC+*DEF+/-
+		toPostfix(infix);
+		System.out.println(out);
+		findVal(out);
+    }
+	static void toPostfix(String str) {
+		Stack<Character> st = new Stack<Character>();
+		
+		for (int i = 0; i < str.length(); i++) {
+			char ch = str.charAt(i);
+			switch(ch) {
+				case '+':
+				case '-':
+					
+					pushToStack(st, ch, 1);
+					break;
+				case '*':
+				case '/':
+					pushToStack(st, ch, 2);
+					break;
+				case '(':
+					st.push(ch);
+					break;
+				case ')':
+					//pop elements;
+					appendoutput(st,ch);
+					break;
+				default:
+					//push to stack
+					if(ch=='E') {
+					}
+					out = out+ch;
+					break;
+			}
+		}
+		while(!st.isEmpty()) {
+			out = out+st.pop();
+		}
+	}
+	//"A*(B+C)-D/(E+F)";
+	//ABC+*DEF+/-
+	static void pushToStack(Stack<Character> st , char ch, int prec) {
+		while(!st.isEmpty()) {
+			char poped = st.pop();
+			if(poped=='(') {
+				st.push(poped);
+				break;
+			}
+			else {
+				int prec2=0;
+				
+				if(poped == '+' || poped == '-') {
+					prec2=1;
+				} else {
+					prec2=2;
+				}
+				if(prec2 > prec) {
+					out = out + poped;
+					
+				} else {
+					st.push(poped); //if incoming op is greater than one in stack then push poped 
+					//element back and then new op. 
+					break;
+				}
+			}
+		}
+		st.push(ch);
+	}
+	static void appendoutput(Stack<Character> st, char ch) {
+		while(!st.isEmpty()) {
+			char poped = st.pop();
+			if(poped =='(') {
+				break;
+			}else {
+				out = out + poped;
+			}
+		}
+	}
+	
+	static void findVal(String str) {
+		Stack<Integer> st = new Stack<Integer>();
+		int res=0;
+		//345+*612+/-
+		for (int i = 0; i < str.length(); i++) {
+			char ch = str.charAt(i);
+			if(ch>= '0' && ch <='9') {
+				st.push((int)ch-'0');
+			}else {
+				int num2 = st.pop();
+				int num1 = st.pop();
+				
+				System.out.println("num1 : "+ num1 + " num2 : "+num2 + " stack res : ");
+				switch(ch) {
+					case '+':
+						res = num1 + num2;
+						break;
+					case '-':
+						res = num1 - num2;
+						break;
+					case '*':
+						res = num1 * num2;
+						break;
+					case '/':
+						res = num1 / num2;
+						break;
+				}
+				st.push(res);
+			}
+		}
+		System.out.println("rsult : "+st.peek());
+	}
+}
