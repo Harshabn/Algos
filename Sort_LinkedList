@@ -1,80 +1,55 @@
-
-	
-	Node<T> first;
-    Node<T> last;
-
-    Linked()
-    {
-        this.first = null;
-        this.last = null;
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode sortList(ListNode first) {
+        if(first==null || first.next==null) {
+    		return first;
+    	}
+    	ListNode ptr1 = first;
+    	ListNode ptr2 = first;
+    	ListNode temp = first;
+    	while(ptr2!=null && ptr2.next!=null) {
+    		temp=ptr1;
+    		ptr1=ptr1.next;
+    		ptr2=ptr2.next.next;
+    	}
+    	//System.out.println(temp.data + " "+ptr1.data);
+    	temp.next=null;
+    	ListNode n1 = sortList(first);
+    	ListNode n2 = sortList(ptr1);
+    	return merge(n1,n2);
     }
-
-	public void insertLast(final Integer data)
-    {
-        final Node node = new Node(data);
-        if (first == null)
-        {
-            first = node;
-        }
-        else
-        {
-            node.previous = last;
-            last.next = node;
-        }
-        last = node;
+    
+    public ListNode merge(ListNode ptr1 , ListNode ptr2){
+    	ListNode temp1=new ListNode(0);
+    	ListNode temp2=temp1;
+    	while(ptr1 != null && ptr2 != null) {
+    		if(ptr1.val < ptr2.val) {
+    			temp2.next=ptr1;
+    			ptr1=ptr1.next;
+    			
+    		}else {
+    			temp2.next=ptr2;
+    			ptr2=ptr2.next;
+    		}
+    		temp2=temp2.next;
+    	}
+    	if(ptr1!=null) {
+    		temp2.next=ptr1;
+    		ptr1=ptr1.next;
+    	}
+    	if(ptr2!=null) {
+    		temp2.next=ptr2;
+    		ptr2=ptr2.next;
+    	}
+    	return temp1.next;
     }
-
-    public Node sortList(final Node head)
-    {
-        if (head.next == null)
-        {
-            return head;
-        }
-        final Node firstStart = head;
-        final Node mid = getMid(head);
-        final Node secondStart = mid.next;
-        mid.next = null;
-
-        return merge(sortList(firstStart), sortList(secondStart));
-    }
-
-    Node merge(Node fstart, Node sstart)
-    {
-        Node temp = new Node(0);
-        final Node temp1 = temp;
-        while (fstart.next != null && sstart.next != null)
-        {
-            if ((Integer) fstart.data < (Integer) sstart.data)
-            {
-                temp.next = fstart;
-                fstart = fstart.next;
-            }
-            else
-            {
-                temp.next = sstart;
-                sstart = sstart.next;
-            }
-            temp = temp.next;
-        }
-        if (fstart.next != null)
-        {
-            temp.next = fstart;
-        }
-        if (sstart.next != null)
-        {
-            temp.next = sstart;
-        }
-        return temp1;
-    }
-
-    Node getMid(final Node head)
-    {
-        Node ptr1 = head;
-        Node ptr2 = head;
-        while (ptr1 != null && ptr2 != null && ptr2.next != null)
-        {
-            ptr1 = ptr1.next;
-            ptr2 = ptr2.next.next;
-        }
-        return ptr1;
-    }
+}
