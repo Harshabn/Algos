@@ -1,0 +1,80 @@
+
+	
+	Node<T> first;
+    Node<T> last;
+
+    Linked()
+    {
+        this.first = null;
+        this.last = null;
+    }
+
+	public void insertLast(final Integer data)
+    {
+        final Node node = new Node(data);
+        if (first == null)
+        {
+            first = node;
+        }
+        else
+        {
+            node.previous = last;
+            last.next = node;
+        }
+        last = node;
+    }
+
+    public Node sortList(final Node head)
+    {
+        if (head.next == null)
+        {
+            return head;
+        }
+        final Node firstStart = head;
+        final Node mid = getMid(head);
+        final Node secondStart = mid.next;
+        mid.next = null;
+
+        return merge(sortList(firstStart), sortList(secondStart));
+    }
+
+    Node merge(Node fstart, Node sstart)
+    {
+        Node temp = new Node(0);
+        final Node temp1 = temp;
+        while (fstart.next != null && sstart.next != null)
+        {
+            if ((Integer) fstart.data < (Integer) sstart.data)
+            {
+                temp.next = fstart;
+                fstart = fstart.next;
+            }
+            else
+            {
+                temp.next = sstart;
+                sstart = sstart.next;
+            }
+            temp = temp.next;
+        }
+        if (fstart.next != null)
+        {
+            temp.next = fstart;
+        }
+        if (sstart.next != null)
+        {
+            temp.next = sstart;
+        }
+        return temp1;
+    }
+
+    Node getMid(final Node head)
+    {
+        Node ptr1 = head;
+        Node ptr2 = head;
+        while (ptr1 != null && ptr2 != null && ptr2.next != null)
+        {
+            ptr1 = ptr1.next;
+            ptr2 = ptr2.next.next;
+        }
+        return ptr1;
+    }
