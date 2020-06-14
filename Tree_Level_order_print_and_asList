@@ -1,3 +1,43 @@
+==============METHOD : 1 ==============
+class Solution {
+    public List<List<Integer>> levelOrder(TreeNode root) 
+    {
+        //Queue to traverse level by level
+        Queue<TreeNode> q = new LinkedList<>();
+        
+        List<List<Integer>> ans = new ArrayList<List<Integer>>();
+        if(root==null)
+            return ans;
+        q.add(root);
+        
+        while(!q.isEmpty())
+        {
+			//get the num of nodes in the current level
+            int size = q.size();
+            ArrayList<Integer> list = new ArrayList<>();
+			
+			//iterate and add to list
+            for(int i=0; i<size; i++)
+            {
+                TreeNode node = q.poll();
+                list.add(node.val);
+				// add node's child to queue
+                if(node.left!=null)
+                    q.add(node.left);
+                if(node.right!=null)
+                    q.add(node.right);
+            
+            }
+            ans.add(list);
+        }
+        return ans;
+        
+    }        
+}
+
+=======METHOD 2 ================
+
+
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
