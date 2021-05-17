@@ -14,7 +14,7 @@ class Solution {
         ListNode prev = null;
         ListNode first = head;
         //For only one element.
-        if(n==1 && head.next == null){
+        if(n==1 && head.next == null){ // Can be removed
             return null;
         }
         n--;
@@ -24,10 +24,10 @@ class Solution {
             //prev = first;
             n--;
         }
-        // condition if first element is to be deleted, then 
+        // condition if FIRST element is to be deleted, then 
         //obviously head has to be in last position.
         if(head.next == null){ 
-            return first.next;
+            return first.next;  //handles if only one element, returns first.next is null
         }
         while(head.next != null) {
             head = head.next;
