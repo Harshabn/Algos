@@ -1,0 +1,82 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        ListNode node = head;
+        ListNode prev = null;
+        ListNode first = head;
+        //For only one element.
+        if(n==1 && head.next == null){
+            return null;
+        }
+        n--;
+        //for any element.
+        while(n > 0 && head.next != null){
+            head = head.next;
+            //prev = first;
+            n--;
+        }
+        // condition if first element is to be deleted, then 
+        //obviously head has to be in last position.
+        if(head.next == null){ 
+            return first.next;
+        }
+        while(head.next != null) {
+            head = head.next;
+            prev = first;
+            first = first.next;
+        }
+        prev.next = first.next;
+        return node;
+    }
+}
+
+/*
+ListNode first = head;
+        ListNode node = head;
+        ListNode prev = head;
+        if(n==1 && head.next == null){
+            return null;
+        }
+        n--;
+        while(n > 0 && head.next != null){
+            head = head.next;
+            prev = first;
+            n--;
+        }
+        while(head.next != null) {
+            head = head.next;
+            prev = first;
+            first = first.next;
+        }
+       
+        prev.next = first.next;
+        return node;
+*/
+/*
+  private int count = 1;
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        if(n == 1 && head.next == null){
+            return null;
+        }
+        return remove(head, n);
+    }
+    private ListNode remove(ListNode head, int n){
+        if(head.next == null){
+            return head;
+        }
+        head.next = remove(head.next, n);
+        count++;
+        if(count == n){
+            return head.next;
+        }
+        return head;
+    }*/
