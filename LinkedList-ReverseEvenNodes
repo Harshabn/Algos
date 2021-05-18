@@ -1,0 +1,36 @@
+public void reverseEvenNodes(Node curr) {
+		Node prev = null;
+		Node lastEven = null;
+		boolean evenFlag = false;
+		while(curr != null) {
+			if(curr.next != null && curr.next.data % 2 == 0) {
+				if(!evenFlag) {
+					prev = curr;				
+				}
+				evenFlag = true;
+				curr = curr.next;
+			} else {
+				lastEven = curr;
+				curr = curr.next;
+				if(evenFlag) {
+					Node n = reverse(prev.next, lastEven);
+					prev.next = n;
+					evenLastNode.next = curr;
+				}
+				evenFlag = false;
+			}
+		}
+		
+	}
+
+	private Node evenLastNode = null;
+	private Node reverse(Node prev, Node lastEven) {
+		if(prev == lastEven) {
+			return lastEven;
+		}
+		Node node = reverse(prev.next, lastEven);
+		prev.next.next = prev;
+		prev.next = null;
+		evenLastNode = prev;
+		return node;
+	}
