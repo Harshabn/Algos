@@ -39,3 +39,56 @@ public void reverseEvenNodes(Node curr) {
 		evenLastNode = prev;
 		return node;
 	}
+	
+	
+	============================================================================================
+	..............Handles even if even numbers at the beginning..............
+	
+	public void reverseEvenNodes(Node curr) {
+		Node prev = null;
+		boolean evenFlag = false;
+		Node beforeOdd = null;
+		Node beforeEven = null;
+		while(curr != null) {
+			if(curr.data %2 == 0) {
+				evenFlag = true;
+				beforeOdd = curr;
+			}else {
+				if(prev == null) {
+					prev = head;
+				}else {
+					prev = beforeEven;
+					prev = prev.next;
+				}
+				if(evenFlag) {
+					Node n = reverse(prev, beforeOdd);
+					if(prev == head) {
+						head = n;
+						evenLastNode.next = curr;  
+					}else {
+						beforeEven.next = n;
+						evenLastNode.next = curr;
+					}
+				}
+				beforeEven = curr;
+				evenFlag = false;
+			}
+			curr = curr.next;
+		}
+		if(beforeEven != curr) {
+			Node n1 = reverse(beforeEven.next, beforeOdd);
+			beforeEven.next = n1;
+		}
+	}
+
+	private Node evenLastNode = null;
+	private Node reverse(Node prev, Node lastEven) {
+		if(prev == lastEven) {
+			return lastEven;
+		}
+		Node node = reverse(prev.next, lastEven);
+		prev.next.next = prev;
+		prev.next = null;
+		evenLastNode = prev;
+		return node;
+	}
