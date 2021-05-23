@@ -1,0 +1,43 @@
+public Node lastNode = null;
+	public void reverseKNodes(Node curr, int k) {
+		Node prev = null;
+		int count = 1;
+		Node prevref = null;
+		while(curr != null) {
+			if(count == k) {
+				Node next = curr.next;
+				if(prev == null) {
+					prev = head;
+				} else {
+					prevref = lastNode;
+					prev = lastNode.next;
+				}
+				Node n = reverse1(prev, curr);
+				if(prev == head) {
+					head = n;
+					lastNode.next = next;
+					curr = lastNode.next;
+				}else {
+					prevref.next = n;
+					lastNode.next = next;
+					curr = lastNode.next;
+				}
+				count=1;
+			}else {
+				count++;
+				curr = curr.next;
+			}
+		}
+	}
+
+	private Node reverse1(Node curr, Node last) {
+		if(curr == last) {
+			return last;
+		}
+		Node n = reverse(curr.next, last);
+		curr.next.next = curr;
+		curr.next = null;
+		lastNode = curr;
+		return n;
+	}
+  
