@@ -1,0 +1,78 @@
+public void addList(Node p1, Node p2) {
+		int lenp1 = findlen(p1);
+		int lenp2 = findlen(p2);
+		int diff = 0;
+		if(lenp1 > lenp2) {
+			diff = lenp1 - lenp2;
+			while(diff > 0) {
+				Node newNode = new Node(0);
+				newNode.next = p2;
+				p2 = newNode;
+				diff--;
+			}
+		}else {
+			diff = lenp2 - lenp1;
+			while(diff > 0) {
+				Node newNode = new Node(0);
+				newNode.next = p1;
+				p1 = newNode;
+				diff--;
+			}
+		}
+		System.out.println();
+		displayList(p1);
+		System.out.println();
+		displayList(p2);
+		Node p3 = reverse(p1, lenp1);
+		//lenp1 = finallen;
+		Node p4 = reverse(p2, lenp2);
+		//lenp2 = finallen;
+		Node resultNode = null;
+		Node addhead = null;
+		int val = 0;
+		int rem = 0;
+		int carry = 0;
+		while(p3 != null) {
+			int attr = p3.data + p4.data;
+			if(carry != 0) {
+				attr += carry;
+				carry = 0;
+			}
+			val = attr / 10;
+			rem = attr % 10;
+			if(val != 0) {
+				attr = rem;
+				carry = val;
+			}
+			Node node = new Node(attr);
+			if(resultNode == null) {
+				resultNode = node;
+				addhead = resultNode;
+			} else {
+				resultNode.next = node;
+				resultNode = node;
+			}
+			p3 = p3.next;
+			p4 = p4.next;
+		}
+		if(carry != 0) {
+			Node node = new Node(carry);
+			resultNode.next = node;
+			resultNode = node;
+			resultNode.next = null;
+		}
+		head = addhead;
+		head = reverse(head, 0);
+	}
+	
+	private Node reverse(Node curr, int len) {
+		if(curr.next == null) {
+			finallen = len;
+			return curr;
+		}
+		len = len + 1;
+		Node n = reverse(curr.next, len);
+		curr.next.next = curr;
+		curr.next = null;
+		return n;
+	}
