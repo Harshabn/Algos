@@ -1,0 +1,27 @@
+public Node reverseEven(Node curr) {
+		Stack<Node> stack = new Stack<Node>();
+		Node prev = curr;
+		Node node = curr;
+		curr = curr.next;
+		int count = 0;
+		while(curr != null) {
+			if(count == 0) {
+				stack.push(curr);
+				curr = curr.next;
+				prev.next = null;
+				count=1;
+				continue;
+			}
+			prev.next = curr;
+			prev = curr;
+			curr = curr.next;
+			count = 0;
+		}
+		System.out.println(stack.peek().data);
+		while(!stack.isEmpty()) {
+			prev.next = (Node) stack.pop();
+			prev = prev.next;
+		}
+		prev.next = null;
+		return node;
+	}
