@@ -1,0 +1,37 @@
+public void checkPalindrom(Node curr) {
+		Node prev = null;
+		Node secondStart = curr;
+		curr = curr.next;
+		while(curr != null && curr.next != null) {
+			if(prev == null) {
+				prev = curr;
+			}else {
+				prev = prev.next;
+			}
+			curr = curr.next.next;
+		}
+		Node node = reverse2(prev.next);
+		boolean pal = true;
+		while(prev != secondStart) {
+			if(secondStart.data != node.data) {
+				System.out.println("Not palindrom");
+				pal = false;
+				break;
+			}
+			node = node.next;
+			secondStart = secondStart.next;
+		}
+		if(pal) {
+			System.out.println("Palindrome");
+		}
+	}
+
+	private Node reverse2(Node curr){
+		if(curr.next == null) {
+			return curr;
+		}
+		Node n = reverse2(curr.next);
+		curr.next.next = curr;
+		curr.next = null;
+		return n;
+	}
