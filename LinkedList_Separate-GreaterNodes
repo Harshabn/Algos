@@ -1,0 +1,31 @@
+public void separateGreaterNodes(Node curr, int k) {
+		Node secondPtr = null;
+		Node secondHead = null;
+		Node prev = null;
+		while(curr != null) {
+			if(curr.data >= k) {
+				if(secondHead == null) {
+					secondHead = curr;
+					secondPtr = secondHead;
+				}else {
+					secondPtr.next = curr;
+					secondPtr = curr;
+				}
+			} else {
+				if(prev == null) {
+					prev = curr;
+					head = prev;
+				}else {
+					prev.next = curr;
+					prev = curr;
+				}
+			}
+			curr = curr.next;
+		}
+		if(prev == null) {
+			head = secondHead;
+		}else {
+			secondPtr.next = null;
+			prev.next = secondHead;
+		}
+	}
