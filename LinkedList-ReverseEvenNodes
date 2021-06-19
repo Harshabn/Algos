@@ -92,3 +92,62 @@ public void reverseEvenNodes(Node curr) {
 		evenLastNode = prev;
 		return node;
 	}
+
+=========================================To handle subsequent odd/even nodes at both the ends=========================
+
+public void reverseEven3(Node curr) {
+		Node prev = null;
+		Node oddNode = null;
+		Node evenNode = curr;
+		int oddCount = 0;
+		int evenCount = 0;
+		while(curr != null) {
+			if(curr.data % 2 == 0) {
+				evenNode = curr;
+				evenCount++;
+			}else {
+				if(evenCount > 1) {
+					if(oddNode == null) {
+						prev = head;
+					}else {
+						prev = oddNode.next;
+					}
+					Node n = rev(prev, evenNode);
+					if(oddNode == null) {
+						head = n;
+					}else {
+						oddNode.next = n;
+					}
+					lastEle.next = curr;
+					evenCount = 0;
+					oddCount = 0;
+				}
+				oddNode = curr;
+				if(oddCount == 1 && evenCount == 1) {
+					oddCount = 0;
+					evenCount = 0;
+				}
+				oddCount++;
+			}
+			curr = curr.next;
+			if(curr == null && evenCount > 1) {
+				oddNode.next = rev(oddNode.next, curr);
+			}
+		}
+		
+	}
+
+	private Node lastEle = null;
+	private Node rev(Node curr, Node prev) {
+		if(curr.next == null || curr == prev) {
+			return curr;
+		}
+		Node n = rev(curr.next, prev);
+		curr.next.next = curr;
+		curr.next = null;
+		lastEle = curr;
+		return n;
+	}
+	
+	
+	
